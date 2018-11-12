@@ -8,18 +8,18 @@ using System.Text;
 
 namespace ISET2018_WebServices
 {
-	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
+	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IServiceHEL" in both code and config file together.
 	[ServiceContract]
-	public interface IService1
+	public interface IServiceHEL
 	{
-
 		[OperationContract]
-		string GetData(int value);
+		string HelloWorld();
 
 		[OperationContract]
 		CompositeType GetDataUsingDataContract(CompositeType composite);
 
-		// TODO: Add your service operations here
+		[OperationContract]
+		WS_Personne GetPersonneByID(int nID);
 	}
 
 
@@ -44,4 +44,33 @@ namespace ISET2018_WebServices
 			set { stringValue = value; }
 		}
 	}
+
+	[DataContract]
+	public class WS_Personne
+	{
+		int _ID;
+		string _Nom, _Prenom;
+
+		[DataMember]
+		public int ID
+		{
+			get { return _ID; }
+			set { _ID = value; }
+		}
+
+		[DataMember]
+		public string Nom
+		{
+			get { return _Nom; }
+			set { _Nom = value; }
+		}
+
+		[DataMember]
+		public string Prenom
+		{
+			get { return _Prenom; }
+			set { _Prenom = value; }
+		}
+	}
+
 }
