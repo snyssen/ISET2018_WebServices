@@ -13,6 +13,7 @@ namespace ISET2018_WebServices
 	// NOTE: In order to launch WCF Test Client for testing this service, please select ServiceHEL.svc or ServiceHEL.svc.cs at the Solution Explorer and start debugging.
 	public class ServiceHEL : IServiceHEL
 	{
+		private string chConn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/WS_Data.mdf") + "';Integrated Security=True;Connect Timeout=30";
 
 		public string HelloWorld()
 		{
@@ -30,7 +31,6 @@ namespace ISET2018_WebServices
 
 		public WS_Personne GetPersonneByID(int nID)
 		{
-			string chConn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='" + System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/WS_Data.mdf") + "';Integrated Security=True;Connect Timeout=30";
 			WS_Personne p = new WS_Personne();
 			SqlConnection Con = new SqlConnection(chConn);
 			Con.Open();
@@ -44,6 +44,21 @@ namespace ISET2018_WebServices
 			}
 			Con.Close();
 			return p;
+		}
+
+		public bool TryLogin(string nom, string password)
+		{
+			SqlConnection Con = new SqlConnection(chConn);
+			Con.Open();
+			SqlCommand cmd = new SqlCommand("SELECT * FROM WS_Personne WHERE Nom='" + nom + "' AND password='" + password + "'", Con);
+			SqlDataReader dr = cmd.ExecuteReader();
+			if (dr.Read())
+			{
+				Con.Close();
+				return true;
+			}
+			Con.Close();
+			return false;
 		}
 	}
 }

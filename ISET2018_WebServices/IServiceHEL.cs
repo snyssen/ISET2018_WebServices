@@ -20,6 +20,9 @@ namespace ISET2018_WebServices
 
 		[OperationContract]
 		WS_Personne GetPersonneByID(int nID);
+
+		[OperationContract]
+		bool TryLogin(string nom, string password);
 	}
 
 
